@@ -1,0 +1,16 @@
+body {
+    position: relative;
+}
+
+.watermark {
+    position: fixed; /* Mantiene la imagen fija en la ventana */
+    top: 0; /* Coloca la imagen en la parte superior */
+    left: 0; /* Coloca la imagen en la parte izquierda */
+    width: 100%; /* Ancho completo */
+    height: 100%; /* Alto completo */
+    opacity: 0.1; /* Ajusta la transparencia */
+    z-index: -1; /* Asegúrate de que esté detrás del contenido */
+    background-image: url('images/marcadeagua.jpg'); /* URL de la imagen */
+    background-size: cover; /* Cubre todo el área */
+    background-repeat: no-repeat; /* No repetir la imagen */
+}

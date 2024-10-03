@@ -1,0 +1,492 @@
+
+<!doctype html>
+<html lang="en" class="no-js">
+  <head>
+    
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width,initial-scale=1">
+      
+      
+      
+      
+        <link rel="prev" href="../explanation/">
+      
+      
+        <link rel="next" href="../reference/">
+      
+      
+      <link rel="icon" href="../assets/images/favicon.png">
+      <meta name="generator" content="mkdocs-1.6.1, mkdocs-material-9.5.39">
+    
+    
+      
+        <title>Tutorial - Método RK4</title>
+      
+    
+    
+      <link rel="stylesheet" href="../assets/stylesheets/main.8c3ca2c6.min.css">
+      
+        
+        <link rel="stylesheet" href="../assets/stylesheets/palette.06af60db.min.css">
+      
+      
+
+
+    
+    
+      
+    
+    
+      
+        
+        
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,300i,400,400i,700,700i%7CRoboto+Mono:400,400i,700,700i&display=fallback">
+        <style>:root{--md-text-font:"Roboto";--md-code-font:"Roboto Mono"}</style>
+      
+    
+    
+      <link rel="stylesheet" href="../assets/_mkdocstrings.css">
+    
+      <link rel="stylesheet" href="../stylesheets/custom.css">
+    
+    <script>__md_scope=new URL("..",location),__md_hash=e=>[...e].reduce(((e,_)=>(e<<5)-e+_.charCodeAt(0)),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
+    
+      
+
+    
+    
+    
+  </head>
+  
+  
+    
+    
+    
+    
+    
+    <body dir="ltr" data-md-color-scheme="slate" data-md-color-primary="teal" data-md-color-accent="purple">
+  
+    
+    <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
+    <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
+    <label class="md-overlay" for="__drawer"></label>
+    <div data-md-component="skip">
+      
+        
+        <a href="#ejemplo" class="md-skip">
+          Skip to content
+        </a>
+      
+    </div>
+    <div data-md-component="announce">
+      
+    </div>
+    
+    
+      
+
+  
+
+<header class="md-header md-header--shadow" data-md-component="header">
+  <nav class="md-header__inner md-grid" aria-label="Header">
+    <a href=".." title="Método RK4" class="md-header__button md-logo" aria-label="Método RK4" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"/></svg>
+
+    </a>
+    <label class="md-header__button md-icon" for="__drawer">
+      
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3 6h18v2H3zm0 5h18v2H3zm0 5h18v2H3z"/></svg>
+    </label>
+    <div class="md-header__title" data-md-component="header-title">
+      <div class="md-header__ellipsis">
+        <div class="md-header__topic">
+          <span class="md-ellipsis">
+            Método RK4
+          </span>
+        </div>
+        <div class="md-header__topic" data-md-component="header-topic">
+          <span class="md-ellipsis">
+            
+              Tutorial
+            
+          </span>
+        </div>
+      </div>
+    </div>
+    
+      
+    
+    
+    
+    
+    
+  </nav>
+  
+</header>
+    
+    <div class="md-container" data-md-component="container">
+      
+      
+        
+          
+        
+      
+      <main class="md-main" data-md-component="main">
+        <div class="md-main__inner md-grid">
+          
+            
+              
+              <div class="md-sidebar md-sidebar--primary" data-md-component="sidebar" data-md-type="navigation" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+
+
+<nav class="md-nav md-nav--primary" aria-label="Navigation" data-md-level="0">
+  <label class="md-nav__title" for="__drawer">
+    <a href=".." title="Método RK4" class="md-nav__button md-logo" aria-label="Método RK4" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"/></svg>
+
+    </a>
+    Método RK4
+  </label>
+  
+  <ul class="md-nav__list" data-md-scrollfix>
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href=".." class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Home
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../explanation/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Explanation
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+    
+  
+  
+  
+    <li class="md-nav__item md-nav__item--active">
+      
+      <input class="md-nav__toggle md-toggle" type="checkbox" id="__toc">
+      
+      
+      
+        <label class="md-nav__link md-nav__link--active" for="__toc">
+          
+  
+  <span class="md-ellipsis">
+    Tutorial
+  </span>
+  
+
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <a href="./" class="md-nav__link md-nav__link--active">
+        
+  
+  <span class="md-ellipsis">
+    Tutorial
+  </span>
+  
+
+      </a>
+      
+        
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#ejemplo" class="md-nav__link">
+    <span class="md-ellipsis">
+      Ejemplo
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../reference/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Reference
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+  </ul>
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+            
+              
+              <div class="md-sidebar md-sidebar--secondary" data-md-component="sidebar" data-md-type="toc" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#ejemplo" class="md-nav__link">
+    <span class="md-ellipsis">
+      Ejemplo
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+          
+          
+            <div class="md-content" data-md-component="content">
+              <article class="md-content__inner md-typeset">
+                
+                  
+
+
+  <h1>Tutorial</h1>
+
+<p><img src= images/marcadeagua.jpg class="watermark" alt="Marca de agua"></p>
+<h2 id="ejemplo">Ejemplo</h2>
+<p>Estudiedmos la evolución temporal de un estado <span class="arithmatex">\(\mathbf{y}(t)\)</span> igual a una matriz 2x2 que corresponde a algún operador lineal. La función que describe la dinámica del problema es 
+$$
+f(t, \mathbf{y}) = -{\rm{i}} [\mathbf{O}, \mathbf{y}(t)],
+$$</p>
+<ul>
+<li>Con <span class="arithmatex">\(\mathbf{O}\)</span> un operador lineal</li>
+<li>Con <span class="arithmatex">\({\rm{i}}\)</span> la constante compleja </li>
+<li>Con <span class="arithmatex">\([A, B] = AB - BA\)</span> una operación de conmutación</li>
+</ul>
+<p>En Python, la constante compleja se denota mediante:</p>
+<pre><code class="language-py">iConst = 1.0j
+
+print(iConst)
+</code></pre>
+<p>1j</p>
+<p>La función del problema dinámico depende del operador <span class="arithmatex">\(\mathbf{O}\)</span>. Escojamos el siguiente operador:</p>
+<pre><code class="language-py">oOper = np.array([[0, 1], [1, 0]])
+
+print(oOper)
+</code></pre>
+<p>[[0 1]
+ [1 0]]</p>
+<p>Seguidamente definimos un estado inicial. Consideremos:</p>
+<pre><code class="language-py">yInit = np.array([[1, 0], [0, 0]])
+
+print(yInit)
+</code></pre>
+<p>[[1 0]
+ [0 0]]</p>
+<p>Dado que el operador <span class="arithmatex">\(\mathbf{O}\)</span> no es diagonal, esperamos que conforme avanza el tiempo, dicho operador modifique el estado <span class="arithmatex">\(\mathbf{y}(t)\)</span>.</p>
+<p>Implementemos la función <span class="arithmatex">\(f(t, \mathbf{y})\)</span> en Python. </p>
+<pre><code class="language-py">def dyn_generator(oper, state):
+
+    return -iConst*(np.dot(oper,state)-np.dot(state,oper))
+
+</code></pre>
+<p>Ahora implementamos la función que realiza la operación dinámica del método RK4:</p>
+<pre><code class="language-py">def rk4(func, oper, state, h):
+    k1=h*func(oper, state)
+    k2=h*func(oper, state+ 0.5*k1)
+    k3=h*func(oper, state+ 0.5*k2)
+    k4=h*func(oper, state+ k3)
+
+    return state+(1/6)*(k1+2*k2+2*k3+k4)
+
+</code></pre>
+<p>Utilizando la función np.linspace para crear un arreglo de valores temporales, evaluamos la dinamica temporal en una grilla unidimensional.</p>
+<pre><code class="language-py">times= np.linspace(0,10.0, 1020)
+</code></pre>
+<p>[0.00000000e+00 9.81354269e-03 1.96270854e-02 ... 9.98037291e+00
+ 9.99018646e+00 1.00000000e+01]</p>
+<p>Esto genrará un arreglo de 1020 valores desde 0 a 10 separados por un mismo valor h:</p>
+<pre><code class="language-py">h=times[1]-times[0]
+
+</code></pre>
+<p>0.009813542688910697</p>
+<p>Creamos un ciclo para evaluar el métod y observar la evolución temporal. Primero, necesitamos una copia del operador que representa el estado inicial. Esto se puede hacer con el método <code>copy()</code> del módulo <code>numpy</code>:</p>
+<pre><code class="language-py">yCopy = yInit.copy()
+
+</code></pre>
+<p>Finalmente, llamamos de manera iterativa <code>rk4()</code>, calculando el operador del estado del sistema <span class="arithmatex">\(\mathbf{y}(t)\)</span> a través del tiempo. A travéz del tiempo, vamos a guardar la entrada <span class="arithmatex">\((0, 0)\)</span> y <span class="arithmatex">\((1, 1)\)</span> de la matriz <span class="arithmatex">\(\mathbf{y}(t)\)</span>. </p>
+<p>Para esto, vamos a inicializar dos arreglos que van a contener los valores con valores iniciales cero. Utilizamos el mismo tamaño del arreglo que contiene la variable independiente temporal: </p>
+<pre><code class="language-py">stateQuant00 = np.zeros(times.size)
+stateQuant11 = np.zeros(times.size)
+</code></pre>
+<pre><code class="language-py">Ahora ya podemos iterar sobre `rk4()` para observar la evolución temporal.
+</code></pre>
+<pre><code class="language-py">for tt in range(times.size):
+    # Guardamos el valor de las entradas (0,0) y (1,1) en los arreglos que definidos anteriormente: stateQuant00 y stateQuant11
+
+    stateQuant00[tt]=yInit[0,0].real
+    stateQuant11[tt]=yInit[1,1].real
+
+    # Invocamos rk4 operando sobre yInit, esto devuelve un nuevo yN    
+    yN=rk4(dyn_generator, oOper, yInit,h)
+
+    # Ahora asignamos yN a yInit
+    # De esta manera, en la siguiente iteración, el operador de esta iteración se convierte en el inicial
+
+    yInit = yN
+</code></pre>
+<p>Vamos a observar estos resutados:</p>
+<p>stateQuand00 = [1.         0.9999037  0.99961483 ... 0.72179771 0.71296039 0.70404104]</p>
+<p>stateQuand11 = [0.00000000e+00 9.63025285e-05 3.85173017e-04 ... 2.78202287e-01
+ 2.87039605e-01 2.95958958e-01]</p>
+<ul>
+<li>recordemos que estos arreglos tienen el tamaño de 1020 entradas</li>
+</ul>
+<p>Finalmente utilizemos la biblioteca <code>matplotlib.pyplot</code> para graficar estos resultados y observar la dinamica del sistema.</p>
+<pre><code class="language-py">
+import matplotlib.pyplot as plt
+
+plt.plot(times,stateQuant00)
+plt.plot(times,stateQuant11)
+
+
+</code></pre>
+<p><img alt="Dinamica del sistema de ejemplo, utilizando el método RK4" src="../images/Untitled.png" /></p>
+
+
+
+
+
+
+
+
+
+
+
+
+                
+              </article>
+            </div>
+          
+          
+<script>var target=document.getElementById(location.hash.slice(1));target&&target.name&&(target.checked=target.name.startsWith("__tabbed_"))</script>
+        </div>
+        
+      </main>
+      
+        <footer class="md-footer">
+  
+  <div class="md-footer-meta md-typeset">
+    <div class="md-footer-meta__inner md-grid">
+      <div class="md-copyright">
+  
+  
+    Made with
+    <a href="https://squidfunk.github.io/mkdocs-material/" target="_blank" rel="noopener">
+      Material for MkDocs
+    </a>
+  
+</div>
+      
+    </div>
+  </div>
+</footer>
+      
+    </div>
+    <div class="md-dialog" data-md-component="dialog">
+      <div class="md-dialog__inner md-typeset"></div>
+    </div>
+    
+    
+    <script id="__config" type="application/json">{"base": "..", "features": [], "search": "../assets/javascripts/workers/search.6ce7567c.min.js", "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}}</script>
+    
+    
+      <script src="../assets/javascripts/bundle.525ec568.min.js"></script>
+      
+        <script src="http://unpkg.com/mathjax@3/es5/tex-mml-chtml.js"></script>
+      
+    
+  </body>
+</html>
